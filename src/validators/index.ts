@@ -1,0 +1,54 @@
+import { NextFunction,Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
+import { AnyZodObject } from 'zod';
+
+/**
+ * 
+ * @param schema - Zod Schema to validate the Request Body
+ * @returns - Middlewarefunction to validate the Request Body
+ */
+
+export const validateRequestBody = (schema: AnyZodObject) => async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        await schema.parseAsync(req.body);
+        next();
+    } catch (error) {
+        //If validation fails 
+
+        res.status(StatusCodes.BAD_REQUEST).json({
+            success: false,
+            message: 'Invalid Request Body',
+            error
+        });
+    }
+};
+
+export const validateRequestQuery = (schema: AnyZodObject) => async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        await schema.parseAsync(req.query);
+        next();
+    } catch (error) {
+        //If validation fails 
+
+        res.status(StatusCodes.BAD_REQUEST).json({
+            success: false,
+            message: 'Invalid Request Body',
+            error
+        });
+    }
+};
+
+export const validateRequestParams = (schema: AnyZodObject) => async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        await schema.parseAsync(req.params);
+        next();
+    } catch (error) {
+        //If validation fails 
+
+        res.status(StatusCodes.BAD_REQUEST).json({
+            success: false,
+            message: 'Invalid Request Body',
+            error
+        });
+    }
+};
