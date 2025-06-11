@@ -1,0 +1,19 @@
+model Booking {
+    id             Int             @id @default(autoincrement())
+    userId         Int             @map("user_id")
+    hotelId        Int             @map("hotel_id")
+    totalGuests    Int             @map("total_guests")
+    bookingAmount  Int             @map("booking_amount")
+    status         BookingStatus   @default(PENDING)
+    createdAt      DateTime        @default(now()) @map("created_at")
+    updatedAt      DateTime        @updatedAt @map("updated_at")
+    idempotencyKey IdempotencyKey?
+
+    @@map("bookings")
+}
+
+enum BookingStatus {
+    PENDING
+    CONFIRMED
+    CANCELLED
+}
