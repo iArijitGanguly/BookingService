@@ -32,7 +32,8 @@ export async function getIdempotencyKeyWithLock(tx: Prisma.TransactionClient, ke
     if(!isValidUUID(key)) {
         throw new BadRequestError('Invalid idempotency key format');
     }
-    const idempotencyKey: IdempotencyRawQueryResponse[] = await tx.$queryRaw(
+    
+    const idempotencyKey = await tx.$queryRaw<IdempotencyRawQueryResponse[]>(
         Prisma.sql`SELECT * FROM idempotency_keys WHERE idem_key = ${key} LIMIT 1 FOR UPDATE;`
     );
 
