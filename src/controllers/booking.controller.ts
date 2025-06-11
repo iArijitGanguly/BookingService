@@ -32,7 +32,6 @@ async function confirmBookingHandler(req: Request, res: Response, next: NextFunc
             status: response.status
         });
     } catch (error) {
-        console.log(error);
         next(error);
     }
 }
